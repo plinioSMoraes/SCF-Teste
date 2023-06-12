@@ -5,7 +5,7 @@ let app = express();
 // let teste1 = require("./teste1");
 // let teste2 = require("./teste2");
 // let teste3 = require("./teste3");
-// let teste4 = require("./teste4");
+let teste4 = require("./teste4");
 // let teste5 = require("./teste5");
 let UserController = require("./Teste1/controller/userController"); // Teste1 e Teste2 
 
@@ -32,7 +32,7 @@ app.get('/', function(req, res){
 // app.get("/users", teste1.getUsers);
 // app.post("/users", teste2)
 // app.delete("/users/:name", teste3)
-// app.put("/users", teste4)
+app.put("/users/:id", teste4)
 // app.get("/users/access", teste5);
 app.get("/user", UserController.getUser); // Teste1
 app.get("/users", UserController.getUsers); // Teste1

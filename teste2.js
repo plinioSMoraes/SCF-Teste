@@ -1,9 +1,9 @@
-var data =  require("../Teste1/database/fakeData");
+var data =  require("./Teste1/database/fakeData");
 
 module.exports = function(req, res){
   
     var name =  req.body.name;
-    var jov =  req.body.job;
+    var job =  req.body.job;
     
     var newUser = {
         name: name,

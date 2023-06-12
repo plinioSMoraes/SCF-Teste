@@ -3,7 +3,7 @@ let bodyParser = require('body-parser');
 let app = express();
 
 // let teste1 = require("./teste1");
-// let teste2 = require("./teste2");
+let teste2 = require("./teste2");
 // let teste3 = require("./teste3");
 // let teste4 = require("./teste4");
 // let teste5 = require("./teste5");
@@ -29,7 +29,7 @@ app.get('/', function(req, res){
 
 // app.get("/user", teste1.getUser);
 // app.get("/users", teste1.getUsers);
-// app.post("/users", teste2)
+app.post("/users", teste2)
 // app.delete("/users", teste3)
 // app.put("/users", teste4)
 // app.get("/users/access", teste5);

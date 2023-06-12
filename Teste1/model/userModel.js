@@ -14,8 +14,18 @@ const addUser = (newUser) => {
     return newUser;
 }
 
+const deleteUser = (email) => {
+    const index = data.findIndex( user => user.email === email );
+    if (index === -1) {
+        return undefined;
+    }
+    const deletedUser = data.splice(index, 1);
+    return deletedUser;
+}
+
 module.exports = {
     getUser,
     getUsers,
     addUser,
+    deleteUser,
 }

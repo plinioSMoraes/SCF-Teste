@@ -28,10 +28,20 @@ const addUser = (req, res) => {
         return res.status(400).send({ message: message });
     }
     return res.status(201).send(message);
-}
+};
+
+const deleteUser = (req, res) => {
+    const { email } = req.params;
+    const { type, message } = UserService.deleteUser(email);
+    if (type === "error") {
+        return res.status(400).send({ message: message });
+    }
+    return res.status(200).send(message[0]);
+};
 
 module.exports = {
     getUser,
     getUsers,
     addUser,
+    deleteUser,
 };

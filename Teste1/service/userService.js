@@ -65,8 +65,27 @@ const addUser = (newUser) => {
     return {type: null, message: addedUser};
 }
 
+const deleteUser = (email) => {
+    if (email === undefined || email === "") {
+        return { type: "error", message: "email is required"};
+    }
+
+    if (!validateEmail(email)) {
+        return { type: "error", message: "email is invalid"};
+    }
+
+    const user = UserModel.getUser(email);
+    if (user === undefined) {
+        return { type: "error", message: "User not found"};
+    }
+
+    const deletedUser = UserModel.deleteUser(email);
+    return {type: null, message: deletedUser};
+}
+
 module.exports = {
     getUser,
     getUsers,
     addUser,
+    deleteUser,
 }

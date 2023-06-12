@@ -21,7 +21,17 @@ const getUsers = (req, res) => {
     return res.status(200).send(message);
 };
 
+const addUser = (req, res) => {
+    const newUser = req.body;
+    const { type, message } = UserService.addUser(newUser);
+    if (type === "error") {
+        return res.status(400).send({ message: message });
+    }
+    return res.status(201).send(message);
+}
+
 module.exports = {
     getUser,
-    getUsers
+    getUsers,
+    addUser,
 };

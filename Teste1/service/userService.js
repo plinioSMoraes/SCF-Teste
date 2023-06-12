@@ -5,6 +5,29 @@ function validateEmail(email) {
     return pattern.test(email);
 }
 
+function validateUser(user) {
+    const { name, job, age, email, department } = user;
+    if (name === undefined) {
+        return { type: "error", message: "name is required"};
+    }
+    if (job === undefined) {
+        return { type: "error", message: "job is required"};
+    }
+    if (age === undefined) {
+        return { type: "error", message: "age is required"};
+    }
+    if (email === undefined) {
+        return { type: "error", message: "email is required"};
+    }
+    if (!validateEmail(email)) {
+        return { type: "error", message: "email is invalid"};
+    }
+    if (department === undefined) {
+        return { type: "error", message: "department is required"};
+    }
+    return { type: null, message: "User is valid"};
+}
+
 const getUser = (email) => {
     if (email === undefined) {
         return { type: "error", message: "email is required"};
@@ -27,7 +50,23 @@ const getUsers = () => {
     return {type: null, message: users};
 }
 
+const addUser = (newUser) => {
+    const allUsers = UserModel.getUsers();
+    const user = UserModel.getUser(newUser.email);
+    if (user !== undefined) {
+        return { type: "error", message: "User already exists"};
+    }
+    const id = allUsers.length + 1;
+    const validations = validateUser(newUser);
+    if (validations.type === "error") {
+        return validations;
+    }
+    const addedUser = UserModel.addUser({id, ...newUser});
+    return {type: null, message: addedUser};
+}
+
 module.exports = {
     getUser,
     getUsers,
+    addUser,
 }

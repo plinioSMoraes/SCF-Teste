@@ -1,4 +1,4 @@
-var data =  require("./fakeData");
+var data =  require("../Teste1/database/fakeData");
 
 module.exports = function(req, res){
   

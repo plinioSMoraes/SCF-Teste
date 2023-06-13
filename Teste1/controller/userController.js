@@ -1,8 +1,8 @@
 const UserService = require('../service/index');
 
 const getUser = (req, res) => {
-    let { email } = req.body;
-    let { type, message } = UserService.getUser(email);
+    let { name } = req.params;
+    let { type, message } = UserService.getUser(name);
 
     if (type === "error") {
         return res.status(400).send({ message: message });
@@ -31,12 +31,31 @@ const addUser = (req, res) => {
 };
 
 const deleteUser = (req, res) => {
-    const { email } = req.params;
-    const { type, message } = UserService.deleteUser(email);
+    const { name } = req.params;
+    const { type, message } = UserService.deleteUser(name);
+    if (type === "error") {
+        return res.status(400).send({ message: message });
+    }
+    return res.status(202).send(message[0]);
+};
+
+const updateUser = (req, res) => {
+    const { id } = req.params;
+    const newUser = req.body;
+    const { type, message } = UserService.updateUser(id, newUser);
     if (type === "error") {
         return res.status(400).send({ message: message });
     }
     return res.status(200).send(message[0]);
+};
+
+const getUserAccess = (req, res) => {
+    const { name } = req.params;
+    const { type, message } = UserService.getUserAccess(name);
+    if (type === "error") {
+        return res.status(400).send({ message: message });
+    }
+    return res.status(200).send({message});
 };
 
 module.exports = {
@@ -44,4 +63,6 @@ module.exports = {
     getUsers,
     addUser,
     deleteUser,
+    updateUser,
+    getUserAccess,
 };

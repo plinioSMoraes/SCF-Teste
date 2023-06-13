@@ -1,7 +1,14 @@
-let data = require('../database/fakeData');
+const data = require('../database/fakeData');
+const accessedData = require("../database/accessedData");
 
-const getUser = (email) => {
-    let user = data.find( user => user.email === email );
+const getUser = (name) => {
+    let user = data.find( user => user.name === name );
+
+    if (accessedData[user.id] === undefined) {
+        accessedData[user.id] = 0;
+    }
+    accessedData[user.id] += 1;
+    
     return user;
 }
 
@@ -14,8 +21,8 @@ const addUser = (newUser) => {
     return newUser;
 }
 
-const deleteUser = (email) => {
-    const index = data.findIndex( user => user.email === email );
+const deleteUser = (name) => {
+    const index = data.findIndex( user => user.name === name );
     if (index === -1) {
         return undefined;
     }
@@ -23,13 +30,21 @@ const deleteUser = (email) => {
     return deletedUser;
 }
 
-const updateUser = (email, newUser) => {
-    const index = data.findIndex( user => user.email === email );
-    if (index === -1) {
-        return undefined;
-    }
+const updateUser = (id, newUser) => {
+    const index = id - 1;
     const updatedUser = data.splice(index, 1, newUser);
     return updatedUser;
+}
+
+const getUserAccess = (name) => {
+    const user = data.find( user => user.name === name );
+    console.log(user);
+    const { id } = user;
+    if (id === undefined || id === "") {
+        return undefined;
+    }
+
+    return accessedData[user.id];
 }
 
 module.exports = {
@@ -38,4 +53,5 @@ module.exports = {
     addUser,
     deleteUser,
     updateUser,
+    getUserAccess,
 }

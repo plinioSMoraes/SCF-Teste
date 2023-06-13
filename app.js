@@ -4,6 +4,7 @@ const app = express();
 
 // middleware
 const adminValidation = require("./middlewares/adminValidation");
+
 // Aqui ficam as rotas dos testes dos requisitos
 const teste1 = require("./teste1");
 const teste2 = require("./teste2");
@@ -12,7 +13,7 @@ const teste4 = require("./teste4");
 const teste5 = require("./teste5");
 
 // Criei essa variavel pois ela faz o controle completo de todas as rotas de usuario (get, post, delete, put)
-// let UserController = require("./Teste1/controller/userController");
+// const UserController = require("./Teste1/controller/userController");
 
 app.set('view engine', 'jade');
 
@@ -33,6 +34,7 @@ app.get('/', function(req, res){
   `);
 });
 
+// Modifiquei algumas rotas, mas a funcionalidade continua a mesma
 app.get("/user", teste1.getUser);
 app.get("/users", teste1.getUsers);
 app.post("/users", teste2)
@@ -41,10 +43,12 @@ app.put("/users/:id", adminValidation, teste4)
 app.get("/users/access/:name", teste5);
 
 // Para a variavel que eu creiei, fiz outras rotas que fazem o mesmo que as rotas acima, mas de uma forma mais organizada
-// app.get("/user", UserController.getUser); // Teste1
+// app.get("/user/:name", UserController.getUser); // Teste1
 // app.get("/users", UserController.getUsers); // Teste1
 // app.post("/users", UserController.addUser); // Teste2
-// app.delete("/users/:email", UserController.deleteUser); // Teste3
+// app.delete("/users/:name", adminValidation, UserController.deleteUser); // Teste3
+// app.put("/users/:id", adminValidation, UserController.updateUser); // Teste4
+// app.get("/users/access/:name", UserController.getUserAccess); // Teste5
 
 const port  = 3000;
 app.listen(port, function(){

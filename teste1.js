@@ -1,5 +1,5 @@
-let data =  require("./Teste1/database/fakeData");
-let accessedData = require("./Teste1/database/accessedData");
+const data =  require("./Teste1/database/fakeData");
+const accessedData = require("./Teste1/database/accessedData");
 
 const getUser = ( req, res, next ) => {
     let { name } = req.body;

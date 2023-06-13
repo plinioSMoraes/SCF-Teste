@@ -28,17 +28,17 @@ function validateUser(user) {
     return { type: null, message: "User is valid"};
 }
 
-const getUser = (email) => {
-    if (email === undefined) {
-        return { type: "error", message: "email is required"};
+const getUser = (name) => {
+    if (name === undefined) {
+        return { type: "error", message: "name is required"};
     }
-    if (email === "") {
-        return { type: "error", message: "email is required"};
+    if (name === "") {
+        return { type: "error", message: "name is required"};
     }
-    if (!validateEmail(email)) {
-        return { type: "error", message: "email is invalid"};
-    }
-    let user = UserModel.getUser(email);
+    // if (!validateEmail(email)) {
+    //     return { type: "error", message: "email is invalid"};
+    // }
+    let user = UserModel.getUser(name);
     return {type: null, message: user};
 }
 
@@ -65,22 +65,59 @@ const addUser = (newUser) => {
     return {type: null, message: addedUser};
 }
 
-const deleteUser = (email) => {
-    if (email === undefined || email === "") {
-        return { type: "error", message: "email is required"};
+const deleteUser = (name) => {
+    if (name === undefined || name === "") {
+        return { type: "error", message: "name is required"};
     }
+    const user = UserModel.getUser(name);
 
-    if (!validateEmail(email)) {
-        return { type: "error", message: "email is invalid"};
-    }
-
-    const user = UserModel.getUser(email);
     if (user === undefined) {
         return { type: "error", message: "User not found"};
     }
 
-    const deletedUser = UserModel.deleteUser(email);
+    const deletedUser = UserModel.deleteUser(name);
     return {type: null, message: deletedUser};
+}
+
+const updateUser = (id, newUser) => {
+    const { email } = newUser;
+    if (email === undefined || email === "") {
+        return { type: "error", message: "email is required"};
+    }
+    
+    if (!validateEmail(email)) {
+        return { type: "error", message: "email is invalid"};
+    }
+
+    const user = UserModel.getUser(name);
+    if (user === undefined) {
+        return { type: "error", message: "User not found"};
+    }
+
+    const validations = validateUser(newUser);
+    if (validations.type === "error") {
+        return validations;
+    }
+
+    const updatedUser = UserModel.updateUser(id, newUser);
+    return {type: null, message: updatedUser};
+}
+
+const getUserAccess = (name) => {
+    if (name === undefined || name === "") {
+        return { type: "error", message: "name is required"};
+    }
+
+    const user = UserModel.getUser(name);
+    if (user === undefined) {
+        return { type: "error", message: "User not found"};
+    }
+
+    const userAccess = UserModel.getUserAccess(name);
+    if (userAccess === undefined) {
+        return { type: "error", message: "User access not found"};
+    }
+    return {type: null, message: userAccess};
 }
 
 module.exports = {
@@ -88,4 +125,6 @@ module.exports = {
     getUsers,
     addUser,
     deleteUser,
+    updateUser,
+    getUserAccess,
 }

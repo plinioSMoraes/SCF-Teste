@@ -11,13 +11,9 @@ module.exports = function(req, res){
         name: name,
         job: job,
     }
-    
+
     const getUser = data.find(user => user.name === name);
     if (getUser) {
-        return res.status(409).send({ message: "User already exists"});
-    }
-
-    if (data.includes(newUser)) {
         return res.status(409).send({ message: "User already exists"});
     }
 

@@ -1,13 +1,15 @@
-let express = require('express');
-let bodyParser = require('body-parser');
-let app = express();
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
 
+// middleware
+const adminValidation = require("./middlewares/adminValidation");
 // Aqui ficam as rotas dos testes dos requisitos
-let teste1 = require("./teste1");
-let teste2 = require("./teste2");
-let teste3 = require("./teste3");
-let teste4 = require("./teste4");
-let teste5 = require("./teste5");
+const teste1 = require("./teste1");
+const teste2 = require("./teste2");
+const teste3 = require("./teste3");
+const teste4 = require("./teste4");
+const teste5 = require("./teste5");
 
 // Criei essa variavel pois ela faz o controle completo de todas as rotas de usuario (get, post, delete, put)
 // let UserController = require("./Teste1/controller/userController");
@@ -34,8 +36,8 @@ app.get('/', function(req, res){
 app.get("/user", teste1.getUser);
 app.get("/users", teste1.getUsers);
 app.post("/users", teste2)
-app.delete("/users/:name", teste3)
-app.put("/users/:id", teste4)
+app.delete("/users/:name", adminValidation, teste3)
+app.put("/users/:id", adminValidation, teste4)
 app.get("/users/access/:name", teste5);
 
 // Para a variavel que eu creiei, fiz outras rotas que fazem o mesmo que as rotas acima, mas de uma forma mais organizada

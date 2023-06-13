@@ -2,13 +2,13 @@ let data =  require("./Teste1/database/fakeData");
 let accessedData = require("./Teste1/database/accessedData");
 
 const getUser = ( req, res, next ) => {
-    let { email } = req.body;
+    let { name } = req.body;
 
-    if (email === undefined) {
-        return res.status(400).send({ message: "email is required"});
+    if (name === undefined) {
+        return res.status(400).send({ message: "name is required"});
     }
 
-    let user = data.find( user => user.email === email );
+    let user = data.find( user => user.name === name );
 
     if (user === undefined) {
         return res.status(404).send({ message: "User not found"});
@@ -18,7 +18,6 @@ const getUser = ( req, res, next ) => {
         accessedData[user.id] = 0;
     }
     accessedData[user.id] += 1;
-    console.log(accessedData);
     return res.status(200).send(user);
 };
 

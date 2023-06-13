@@ -1,4 +1,4 @@
-var data =  require("./Teste1/database/fakeData");
+let data =  require("./Teste1/database/fakeData");
 
 module.exports = function(req, res) {
     let { name } = req.params;
